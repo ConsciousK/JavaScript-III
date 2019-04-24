@@ -19,45 +19,45 @@ When you use 'this' inside of the function, contained within the object, it will
 
 //--------------------------------------------- Principle 1
 
-// function globalThis(globalbind){
-//    console.log(this);
-//    return globalbind;
-// }
-// globalThis("I am globally bound and I reference the entire window/console when I am called.");
+function globalThis(globalbind) {
+    console.log("I am a globally bound 'this'");
+    console.log(this);
+    return globalbind;
+}
+globalThis("I am globally bound and I reference the entire window/console when I am called.");
 
 //----------------------------------------------Principle 2
 
-// const implicitBind = {
-//  implied: yes,
-//  sayWhereIAm: function(boundwhere) {
-//      console.log(`${implied}, I am an ${boundwhere} "this" reference.`);
-//      console.log(this);  
-//  }
-// };
-// implicitBind.sayWhereIAm('implied');
+const implicitBind = {
+    implied: 'true',
+    sayWhereIAm: function (boundwhere) {
+        console.log(`${this.implied}, I am an ${boundwhere} "this" reference.`);
+        console.log(this);
+    }
+};
+implicitBind.sayWhereIAm('implied');
 
 //--------------------------------------------- Principle 3
 
-// function newObj(objName) {
-//  this.say = 'I am a new Binding named ';
-//  this.objname = objname;
-//  this.exclaim = function() {
-//      console.log(this.say + this.objname);  
-//  }
-// };
-//
-// const objOne = new newObj('Object One');
-// const objTwo = new newObj('Object Two');
-//
-// objOne.exclaim();
-// objTwo.exclaim();
+function NewObj(objname) {
+    this.say = 'I am a new Binding named ';
+    this.objname = objname;
+    this.exclaim = function () {
+        console.log(this.say + this.objname);
+        console.log(this);
+    }
+};
+
+const objOne = new NewObj('Object One');
+const objTwo = new NewObj('Object Two');
+
+objOne.exclaim();
+objTwo.exclaim();
 
 //--------------------------------------------- Principle 4
 
-// REFERENCING ABOVE CODE, THIS WILL EXPLICITELY BIND one object with another objects properties.
-//
-//objOne.exclaim.call(objTwo);
-//objTwo.exclaim.apply(objOne);
-//
-//
-//
+// REFERENCING ABOVE CODE, .call and .apply WILL EXPLICITELY BIND one object with another objects properties, 
+// essentially overwriting the originally referenced object.
+
+objOne.exclaim.call(objTwo);
+objTwo.exclaim.apply(objOne);
